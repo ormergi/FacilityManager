@@ -1,6 +1,7 @@
 package com.projects.cli;
 
 import java.io.IOException;
+import java.text.DateFormatSymbols;
 
 import com.projects.logics.Logics;
 
@@ -13,7 +14,7 @@ public abstract class AbstractMainMenu
 	public AbstractMainMenu(Logics logics, String userName)
 	{
 		mLogics = logics;
-		mMenuTitle = "Hello " + userName + ", Please select: ";
+		mMenuTitle = String.format("Hello %s, Please select: ",userName);
 	}
 	
 	public void loop()
@@ -48,15 +49,22 @@ public abstract class AbstractMainMenu
 	
 	public static int execMenu(String title, String... options)
 	{
-		System.out.println(title);
-		
+		StringBuilder menu = new StringBuilder();
+
+		menu.append(title);
+		menu.append("\n");
 		for (int i = 0; i < options.length; i++)
 		{
-			System.out.println((i + 1) + ". " + options[i] + ".");
+			menu.append(String.format("%d. %s. %n",(i + 1), options[i]));
 		}
-		
-		System.out.print("Your selection: ");
+		menu.append("Your selection: ");
+		System.out.print(menu.toString());
 		
 		return MyScanner.readInt(options.length);
 	}
+
+	protected String getMonthName(Integer month)
+    {
+        return DateFormatSymbols.getInstance().getMonths()[month - 1];
+    }
 }

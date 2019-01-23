@@ -12,11 +12,11 @@ import com.projects.persons.*;
 
 public class SqlDataBase 
 {
-	private String mDBAddress = "win10vm2";
+	private String mDBAddress = "localhost";
 	private Integer mDBPort = 3306;
 	private String mInstanceName = "facility_manager";
 	private String mDBUser = "root";
-	private String mPassword = "S12d!2ed3";
+	private String mPassword = "password";
 	private Connection mConnection = null;
 
 	public SqlDataBase() throws SQLException 

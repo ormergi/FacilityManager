@@ -48,7 +48,11 @@ public class CliUserInterface
 	private eClientKind selectClientKind() 
 	{
 		eClientKind kind = eClientKind.Committee;
-		int selection = AbstractMainMenu.execMenu("Welcome! Who are you?", "Comittee", "Tenant", "Provider");
+		int selection = AbstractMainMenu.execMenu(
+				"Welcome! Who are you?",
+				"Comittee",
+				"Tenant",
+				"Provider");
 		
 		switch(selection)
 		{
@@ -76,7 +80,11 @@ public class CliUserInterface
 		}
 		else
 		{
-			int selection = AbstractMainMenu.execMenu("Hi " + clientKind + ", please select:", "Sign in", "Create new user");
+			int selection = AbstractMainMenu.execMenu(
+					"Hi " + clientKind + ", " +
+							"please select:",
+					"Sign in",
+					"Create new user");
 			
 			System.out.println();
 			

@@ -49,7 +49,7 @@ public class MyScanner
 				}
 				else
 				{
-					System.out.print("Please enter number between 1 to " + maxInt + ", Your selection: ");	
+					System.out.print(String.format("Please enter number between 1 to %d, Your selection: ",maxInt));
 				}
 			}
 			catch (NumberFormatException | InputMismatchException e)

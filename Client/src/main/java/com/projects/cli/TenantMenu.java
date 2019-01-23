@@ -31,10 +31,13 @@ public class TenantMenu extends AbstractMainMenu
 	private void showTenantPayments() 
 	{
 		int[] paymnets = mLogics.getTenantPayments();
-		
+		StringBuilder paidMonths = new StringBuilder();
+
 		for (int i = 0; i < paymnets.length; i++)
 		{
-			System.out.println("Month " + (i + 1) + "- " + paymnets[i]);
-		}	
+			paidMonths.append(String.format("%-15s: %d",getMonthName(i + 1),paymnets[i]));
+		}
+
+		System.out.println(paidMonths.toString());
 	}
 }

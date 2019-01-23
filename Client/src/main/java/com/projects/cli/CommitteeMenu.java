@@ -62,7 +62,7 @@ public class CommitteeMenu extends AbstractMainMenu
 		String tenantId = MyScanner.readString();	
 		String tenantPayments = mLogics.getTenantMonthsPaid(tenantId);
 		
-		System.out.println("Paid months: " + tenantPayments);
+		System.out.println(String.format("Paid months: %s" , tenantPayments));
 	}
 
 	private void showApartpmentsPayments() 
@@ -74,7 +74,7 @@ public class CommitteeMenu extends AbstractMainMenu
 			String apartmentsNumber = apartmentsPayments[i].substring(0, 1);
 			String paidMonths = apartmentsPayments[i].substring(2);
 			
-			System.out.println("Apartment number " + apartmentsNumber + " paid months: " + paidMonths);
+			System.out.println(String.format("Apartment number: %d paid months: ", apartmentsNumber, paidMonths));
 		}
 	}
 
@@ -112,11 +112,16 @@ public class CommitteeMenu extends AbstractMainMenu
 		
 		// print months payments
 		String[] splitedString = apartmentMonthlyPayments.split(" ");
-		
-		for (int i = 0; i < splitedString.length; i += 2) 
+		StringBuilder apartmentPayments = new StringBuilder();
+		int monthNumber = 1;
+
+		for (int i = 0; i < splitedString.length; i += 2)
 		{
-			System.out.println("Month number " + splitedString[i] + ": " + splitedString[i + 1]);
+			monthNumber = Integer.parseInt(splitedString[i]);
+			apartmentPayments.append(String.format("%-15s: %s %n", getMonthName(monthNumber), splitedString[i +1]));
 		}
+
+		System.out.println(apartmentPayments.toString());
 	}
 
 	private void showProvidersList() 
@@ -150,13 +155,13 @@ public class CommitteeMenu extends AbstractMainMenu
 		}
 		
 		Provider[] providers = mLogics.getProvidersByCategory(category);
-		
+		StringBuilder providersDetails = new StringBuilder();
+		providersDetails.append("\n");
 		for (int i = 0; i < providers.length; i++) 
 		{
-			System.out.println();
-			System.out.println("Provider number " + (i + 1) + ":");
-			System.out.println(providers[i].toString());
-		}	
+			providersDetails.append(String.format("Provider number %d: %n %s %n",(i + 1), providers[i].toString()));
+		}
+		System.out.println(providersDetails.toString());
 	}
 
 	private void showOptiomalProviderByCategory() 
@@ -187,9 +192,7 @@ public class CommitteeMenu extends AbstractMainMenu
 		
 		Provider providers = mLogics.getOptimalProvider(category);
 
-		System.out.println();
-		System.out.println("Optimal provider for " + category + " category is:");
-		System.out.println(providers.toString());
+		System.out.println(String.format("%n Optimal provider for %s category is:", category ));
 	}
 
 	private void addOrUpdateProvider() 
