@@ -6,7 +6,7 @@ import com.projects.logics.Logics;
 
 public class CommitteeMenu extends AbstractMainMenu
 {
-	public CommitteeMenu(Logics logics, String userName) 
+	CommitteeMenu(Logics logics, String userName)
 	{
 		super(logics, userName);
 	}
@@ -35,7 +35,7 @@ public class CommitteeMenu extends AbstractMainMenu
 			showTenantMonthsPaid();
 			break;
 		case 2:
-			showApartpmentsPayments();
+			showApartmentsPayments();
 			break;
 		case 3:
 			addTenantPayment();
@@ -47,7 +47,7 @@ public class CommitteeMenu extends AbstractMainMenu
 			showProvidersList();
 			break;
 		case 6:
-			showOptiomalProviderByCategory();
+			showOptimalProviderByCategory();
 			break;
 		case 7:
 			addOrUpdateProvider();
@@ -65,17 +65,23 @@ public class CommitteeMenu extends AbstractMainMenu
 		System.out.println(String.format("Paid months: %s" , tenantPayments));
 	}
 
-	private void showApartpmentsPayments() 
+	private void showApartmentsPayments()
 	{
 		String[] apartmentsPayments = mLogics.getApartmentsPayments();
-		
-		for (int i = 0; i < apartmentsPayments.length; i++) 
-		{
-			String apartmentsNumber = apartmentsPayments[i].substring(0, 1);
-			String paidMonths = apartmentsPayments[i].substring(2);
-			
-			System.out.println(String.format("Apartment number: %d paid months: ", apartmentsNumber, paidMonths));
-		}
+		StringBuilder apartmentPayments = new StringBuilder();
+
+        for (String apartmentsPayment : apartmentsPayments)
+        {
+            String apartmentsNumber = apartmentsPayment.substring(0, 1);
+            String paidMonths = apartmentsPayment.substring(2);
+            apartmentPayments.append(
+                    String.format(
+                            "Apartment number: %s paid months: %s %n",
+                            apartmentsNumber,
+                            paidMonths));
+        }
+
+		System.out.println(apartmentPayments.toString());
 	}
 
 	private void addTenantPayment() 
@@ -107,12 +113,11 @@ public class CommitteeMenu extends AbstractMainMenu
 		int apartmentNumber = MyScanner.readInt();
 		
 		String apartmentMonthlyPayments = mLogics.getApartmentMonthlyPayments(apartmentNumber);
-		
-		System.out.println();
-		
+
 		// print months payments
 		String[] splitedString = apartmentMonthlyPayments.split(" ");
 		StringBuilder apartmentPayments = new StringBuilder();
+        apartmentPayments.append("\n");
 		int monthNumber = 1;
 
 		for (int i = 0; i < splitedString.length; i += 2)
@@ -159,12 +164,17 @@ public class CommitteeMenu extends AbstractMainMenu
 		providersDetails.append("\n");
 		for (int i = 0; i < providers.length; i++) 
 		{
-			providersDetails.append(String.format("Provider number %d: %n %s %n",(i + 1), providers[i].toString()));
+			providersDetails.append(
+			        String.format(
+			                "Provider number %d:%n%s %n%n",
+                            (i + 1),
+                            providers[i].toString()));
 		}
+
 		System.out.println(providersDetails.toString());
 	}
 
-	private void showOptiomalProviderByCategory() 
+	private void showOptimalProviderByCategory()
 	{
 		int selection = AbstractMainMenu.execMenu("Which providers category?",
 				eProvidersCategories.Cleaning.toString(),
@@ -189,10 +199,9 @@ public class CommitteeMenu extends AbstractMainMenu
 			category = eProvidersCategories.Electrics;
 			break;
 		}
-		
-		Provider providers = mLogics.getOptimalProvider(category);
 
-		System.out.println(String.format("%n Optimal provider for %s category is:", category ));
+		Provider providers = mLogics.getOptimalProvider(category);
+		System.out.println(String.format("Optimal provider for %s category is:%n%s", category, providers.toString()));
 	}
 
 	private void addOrUpdateProvider() 
